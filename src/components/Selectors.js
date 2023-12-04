@@ -22,7 +22,7 @@ const Selectors = ({components, properties, selectedComponents, selectedProperti
     const coords = e.target.getBoundingClientRect();
 
     const options = id
-      ? {id: id, list: subList, coords: {x: coords.left, y: coords.top + coords.height}}
+      ? {id: id, list: subList, coords: {x: coords.left, y: coords.top + coords.height + window.scrollY}}
       : {};
     setModal(options);
   }
