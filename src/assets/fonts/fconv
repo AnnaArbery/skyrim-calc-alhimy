@@ -1,0 +1,13 @@
+#!/bin/bash
+for file in `find . -type f -name "*.ttf"`
+do
+	##if ! [ -d ${file%.*} ]; then
+	## mkdir ${file%.*}
+	## fi
+	cat ${file%.*}.ttf | ttf2woff2 > ${file%.*}.woff2
+	ttf2woff ${file%.*}.ttf ${file%.*}.woff
+	##ttf2eot ${file%.*}.ttf ${file%.*}.eot
+	##ttf2svg ${file%.*}.ttf ${file%.*}.svg
+	##mv ${file%.*}.svg ${file%.*}.eot ${file%.*}
+	мmv ${file%.*}.woff2 ${file%.*}.woff ${file%.*}.ttf ${file%.*}
+done

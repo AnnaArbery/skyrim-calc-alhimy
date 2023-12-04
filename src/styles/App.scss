@@ -1,0 +1,252 @@
+@import 'includes/fonts';
+@import 'includes/reset';
+@import 'includes/general';
+
+body {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 40px;
+  background: rgb(50,42,40);
+  color: rgba(255,255,255,0.6);
+  font: 400 20px/1 'FuturaTCYLigCon';
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
+  }
+}
+
+.header {
+  color: #D8C8A6;
+  padding: 30px 0;
+  background: rgb(50,42,40) url('../assets/img/bg-alhimi1.jpg') no-repeat 50% 100%;
+  text-align: center;
+  h1 {
+    font-family: 'MagicCardsCyrillic';
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 1;
+    span {
+      display: block;
+      font-family: 'FuturisXCondCTT';
+      font-size: 50px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+  }
+  h2 {
+    font-size: 30px;
+    line-height: 1;
+    font-weight: normal;
+    letter-spacing: 2px;
+    color: #d26a6a;
+  }
+}
+
+.nav {
+  font-size: 22px;
+  font-family: "MagicCardsCyrillic";
+  letter-spacing: 3px;
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
+  & > * {
+    margin: 0 4px;
+    transition: opacity 0.7s ease;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  &__item {
+    &--active {
+      border-bottom: 2px solid currentColor;
+      cursor: default;
+    }
+  }
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.menu {
+  padding: 10px 0 20px;
+  text-align: center;
+  &__selected {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  b {
+    letter-spacing: 1px;
+  }
+  span {
+    display: inline-block;
+    margin: 0 2px 2px;
+    padding: 0 4px;
+    font-style: italic;
+    font-size: 0.8em;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.8);
+    color: #000;
+    cursor: pointer;
+  }
+}
+
+.btn {
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  margin-left: 6px;
+  @media screen and (max-width: 1024px) {
+    height: 16px;
+    width: 16px;
+  }
+  &--del {
+    background: url('../assets/img/close.svg') no-repeat 50% 50%/100% 100%;
+  }
+  &--save {
+    background: url('../assets/img/save.svg') no-repeat 50% 50%/100% 100%;
+  }
+}
+
+.card-item, 
+.card-table {
+  background: rgba(255,255,255,0.2);
+  padding: 4px;
+  cursor: pointer;
+  &--active {
+    background: #272626;
+    color: rgba(255,255,255,0.8);
+  }
+  &:hover {
+    background: #d2d1d1cc;
+    color: #272626;
+  }  
+}
+
+.card-item {
+  position: relative;
+  display: block;
+  margin: 2px 1px;
+  padding-right: 20px;
+  span {
+    position: absolute;
+    font-size: 0.7em;
+    right: 4px;
+    top: 2px;
+  }
+}
+
+.selectors {
+  position: relative;
+  padding: 20px 0 30px;
+  &__row {
+    display: flex;
+    gap: 10px;
+    & > * {
+      width: 50%;
+    }
+  }
+  &__subcontent {
+      overflow: auto;
+      max-height: 55vh;
+
+  }
+  &__subhead {
+    display: flex;
+  }
+  &__input {
+    height: 25px;
+    width: calc(100% - 63px);
+    margin: 0 1px;
+    padding: 4px;
+    border: none;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.6);
+    @media screen and (max-width: 1024px) {
+      width: calc(100% - 55px);
+    }
+    &:focus {
+      outline: none;
+      border-color: #fff;
+    }
+    &::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+  }
+}
+
+.about {
+  p {
+    margin: 4px 0 10px;
+  }
+  h2 {
+    font-size: 2em;
+  }
+}
+
+.table {
+  &__row {
+    display: flex;
+    &--table {
+      min-width: 480px;
+    }
+  }
+  &__item {
+    width: 20%;
+    margin: 1px;
+    display: flex;
+    align-items: center;
+    &-notes {
+      width: 50%;
+       margin: 1px;
+    }
+  }
+  &__body {
+    overflow: auto;
+  }
+}
+
+.gallery {
+  display: flex;
+  &__card {
+    position: relative;
+    width: calc(50% - 4px);
+    margin: 0 2px;
+    padding-bottom: 40%;
+  }
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+
+.modalHover {
+  position: absolute;
+  background: #272626;
+  color: #fff;
+  padding: 5px;
+  font-size: 0.8em;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  pointer-events:none;
+}
+
+.status-save {
+  position: absolute;
+  padding: 3px;
+  font-size: 16px;
+  font-variant: italic;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #41c665;
+}
+
+.props-envy {
+  color: #d26a6a!important;
+}
