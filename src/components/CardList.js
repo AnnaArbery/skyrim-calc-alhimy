@@ -3,7 +3,7 @@ import Card from './Card'
 
 const CardList = ({list, selected, clickEvent, mouseEvent: {cb, selectedSublist}}) => {
   return (
-    <ul className='calculator__subcontent'>
+    <ul className='selectors__subcontent'>
       {list.length > 0 && list.map(item => 
         <Card
           key={item.id}
