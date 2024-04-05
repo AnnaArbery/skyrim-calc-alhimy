@@ -16,7 +16,7 @@ const config = {
     filename: 'js/[name].js?v=[contenthash]',
     path: path.resolve(__dirname, DIST_DIR),
     clean: true,
-    publicPath: '/'
+    // publicPath: '/'
   },
   devtool: (MODE === 'development') ? 'inline-source-map' : false,
   devServer: { 
