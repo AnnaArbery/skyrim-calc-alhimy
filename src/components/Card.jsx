@@ -7,7 +7,7 @@ const Card = ({selected, type, children}) => (
 )
 
 const ListItem = ({object: {id, name, cost}, clickEvent, mouseEvent}) => (
-  <div
+  <button
     className='listItem'
     onClick={() => clickEvent(id)}
     onMouseEnter={e => mouseEvent(e, id)}
@@ -15,16 +15,16 @@ const ListItem = ({object: {id, name, cost}, clickEvent, mouseEvent}) => (
   >
     {name}
     <span>{cost}</span>
-  </div>
+  </button>
 );
 
 const Td = ({handleClick, name}) => (
-  <div
+  <button
     className='tableItem'
     onClick={handleClick}
   >
     {name}
-  </div>
+  </button>
 );
 
 const NoteItem = ({list}) => (

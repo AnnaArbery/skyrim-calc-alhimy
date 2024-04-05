@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import useFetch from '../hooks/useFetch.js';
-import { filterListById } from '../assets/utilits.js';
-import useLocalStorage from '../hooks/useLocalStorage.js';
+import useFetch from '../hooks/useFetch';
+import { filterListById } from '../assets/utilits';
+import useLocalStorage from '../hooks/useLocalStorage';
 import Card from '../components/Card';
-import ComponentsStore from '../store/componentsStore.js';
-import PropsStore from '../store/propsStore.js';
+import ComponentsStore from '../store/componentsStore';
+import PropsStore from '../store/propsStore';
 
 const Notes = observer(() => {
   const [notes] = useFetch(process.env.URL_NOTES);

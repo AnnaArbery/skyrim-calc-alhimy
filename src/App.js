@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './styles/App.scss'
 import { Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout.jsx';
+import Layout from './components/Layout';
 import About from './pages/About'
 import Table from './pages/Table'
 import Notes from './pages/Notes'

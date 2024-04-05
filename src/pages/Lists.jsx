@@ -4,12 +4,12 @@ import List from '../components/List/List'
 import Modal from '../components/Modal'
 import Header from '../components/List/Header'
 import Selected from '../components/List/Selected'
-import useFilter from '../hooks/useFilter.js'
-import useLocalStorage from '../hooks/useLocalStorage.js'
-import {filterListByList, filterListById, getPropsFromComps, findByName} from '../assets/utilits.js'
-import ComponentsStore from '../store/componentsStore.js';
-import PropsStore from '../store/propsStore.js';
-import useSelect from '../hooks/useSelect.js'
+import useFilter from '../hooks/useFilter'
+import useLocalStorage from '../hooks/useLocalStorage'
+import useSelect from '../hooks/useSelect'
+import { filterListByList, filterListById, getPropsFromComps, findByName } from '../assets/utilits'
+import ComponentsStore from '../store/componentsStore';
+import PropsStore from '../store/propsStore';
 
 const Lists = observer(() => {
   const { components } = ComponentsStore;
@@ -29,7 +29,7 @@ const Lists = observer(() => {
     const coords = e.target.getBoundingClientRect();
 
     const options = id
-      ? {id: id, list: subList, coords: {x: coords.left, y: coords.top + coords.height + window.scrollY}}
+      ? {id, list: subList, coords: {x: coords.left, y: coords.top + coords.height + window.scrollY}}
       : {};
     setModal(options);
   }

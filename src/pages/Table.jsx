@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import useFilter from '../hooks/useFilter.js';
-import {filterListByList, filterListById} from '../assets/utilits.js';
+import useFilter from '../hooks/useFilter';
+import {filterListByList, filterListById} from '../assets/utilits';
 import Card from '../components/Card';
-import ComponentsStore from '../store/componentsStore.js';
-import PropsStore from '../store/propsStore.js';
+import ComponentsStore from '../store/componentsStore';
+import PropsStore from '../store/propsStore';
 
 const Table = observer(() => {
   const { components } = ComponentsStore;
@@ -20,7 +20,7 @@ const Table = observer(() => {
           {filteredComponents.length > 0 && filteredComponents.map(({id: parentID, name, props}) =>
             <div className='table__row table__row--table'  key={parentID}>
               <div className='card' key={name}>{name}</div>
-              {filterListById(properties, props).map(({name, id, type}) => 
+              {filterListById(properties, props).map(({name:childName, id, type}) => 
                 <Card
                   key={`${parentID}-${id}`}
                   selected={selected.includes(id)}
@@ -28,7 +28,7 @@ const Table = observer(() => {
                 >
                   <Card.Td
                     handleClick={() => setSelected(prev => prev.includes(id) ? [] : [id])}
-                    name={name}
+                    name={childName}
                   />
                 </Card>
               )}
