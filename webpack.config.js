@@ -2,11 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 const CopyPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const MODE = process.argv.includes('development') ? 'development': 'production';
-const DIST_DIR = 'docs';
+const DIST_DIR = 'public';
 
 const config = {
   mode: MODE,
@@ -15,6 +16,7 @@ const config = {
     filename: 'js/[name].js?v=[contenthash]',
     path: path.resolve(__dirname, DIST_DIR),
     clean: true,
+    publicPath: '/'
   },
   devtool: (MODE === 'development') ? 'inline-source-map' : false,
   devServer: { 
@@ -28,7 +30,10 @@ const config = {
     },
     open: true,
     // hot: true, //для фреймворков + github.com/pmmmwh/react-refresh-webpack-plugin
-    // historyApiFallback: true,//для роутинга,только для dev-servera-youtu.be/acAH2_YT6bs?t=5022
+    historyApiFallback: true, //для роутинга,только для dev-servera - youtu.be/acAH2_YT6bs?t=5022
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -45,7 +50,11 @@ const config = {
         use: useCss()
       },
       {
-        test: /\.js$/,
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
@@ -62,17 +71,10 @@ const config = {
         }
       },
       {
-        // test: /\.svg$/,//как обычный url-ошибка
-        // use: ['@svgr/webpack', 'url-loader'],//как url
-        // use: [
-        //   {
-        //     loader: '@svgr/webpack',
-        //     options: {
-        //       icon: true
-        //     }
-        //   }
-        // ],
-      }
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack', 'file-loader'],
+      },
     ],
   },
   plugins: [
@@ -84,6 +86,7 @@ const config = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
     }),
+    new Dotenv({ systemvars: true }),// для деплоя вместо обычного dotenv
     new CopyPlugin({
       patterns: [
         { from: path.resolve(__dirname, 'src/store'), to: 'store' },
@@ -104,16 +107,8 @@ function useCss(options = {}) {
     },
     {
       loader: 'postcss-loader',
-      options: {
-        postcssOptions: {
-          plugins: [
-            ['autoprefixer', {}],
-          ],
-        },
-      },
     },
     // 'resolve-url-loader',//для корректных ссылок в sass
-    'group-css-media-queries-loader',
     {
       loader: 'sass-loader',
       options: {
@@ -124,7 +119,7 @@ function useCss(options = {}) {
 }
 
 const configImg = {
-  test: /\.(jpe?g|png|webp|gif|svg)$/i,
+  test: /\.(jpe?g|png|webp|gif)$/i,
   type: 'asset/resource',
   generator: {
     filename: 'img/[name][ext]'
@@ -167,9 +162,8 @@ if(MODE == 'production') {
 }
 config.module.rules.push(configImg);
 
-module.exports = config;
+if (process.argv.includes('--analyze')) {
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
 
-// npm run dev
-// @babel/core, babel-loader, @babel/preset-env, @babel/preset-typescript @babel/preset-react
-// youtube.com/watch?v=5j19we1xpSA (Лаврик,2021), 21:40-модульные стили, 54:20-split-chunk
-// react react-dom @babel/preset-react
+module.exports = config;

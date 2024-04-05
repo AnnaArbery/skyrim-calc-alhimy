@@ -1,6 +1,16 @@
 {
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react-hooks/recommended"],
-  "plugins": ["react", "react-hooks"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "airbnb",
+    "prettier"
+  ],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "node": true,
@@ -19,11 +29,33 @@
     }
   },
   "rules": {
-      "no-console": "warn",
-      "quotes": ["warn", "single"],
-      "jsx-quotes": ["warn", "prefer-single"],
-      "prefer-const": "warn",
-      "indent": ["warn", 2],
-      "react/prop-types": "off"
+    "no-console": "warn",
+    "quotes": ["warn", "single"],
+    "jsx-quotes": ["warn", "prefer-single"],
+    "prefer-const": "warn",
+    "indent": ["warn", 2],
+    "linebreak-style": ["warn", "windows"],
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "React"
+      }      
+    ],
+    "no-param-reassign": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/button-has-type": "off",
+    "react/jsx-uses-react": "off",
+    "react/jsx-filename-extension": [
+      1, {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/function-component-definition": [
+      2, {
+        "namedComponents": ["function-declaration", "arrow-function"]
+      }     
+    ]
   }
 }

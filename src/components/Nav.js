@@ -1,13 +1,19 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const Nav = ({handlePage, page}) => {
-
+const Nav = () => {
+  const handleActive = ({isActive}) => isActive ? 'nav__item--active' : '';
+  
   return (
-    <div className='nav'>
-      <button onClick={()=>handlePage('selectors')} className={(page === 'selectors') ? 'nav__item--active':''}>Список</button>
-      <button onClick={()=>handlePage('table')} className={(page === 'table') ? 'nav__item--active':''}>Таблица</button>
-      <button onClick={()=>handlePage('notes')} className={(page === 'notes') ? 'nav__item--active':''}>Заметки</button>
-      <button onClick={()=>handlePage('about')} className={(page === 'about') ? 'nav__item--active':''}>Об алхимии</button>
+    <div className='menu'>
+      <div className='grid'>
+        <div className='nav'>
+          <NavLink to='/' className={handleActive}>Список</NavLink>
+          <NavLink to='/table' className={handleActive}>Таблица</NavLink>
+          <NavLink to='/notes' className={handleActive}>Заметки</NavLink>
+          <NavLink to='/about' className={handleActive}>Об алхимии</NavLink>
+        </div>
+      </div>
     </div>
   )
 }

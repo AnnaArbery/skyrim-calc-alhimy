@@ -1,6 +1,7 @@
 .centerlayer {
 	width: 100%;
 }
+
 .grid {
 	width: 100%;
 	max-width: 800px;
@@ -8,8 +9,8 @@
 	padding: 0 10px;
 }
 
-html {
-    scrollbar-width: thin;
+html, * {
+  scrollbar-width: thin;
  	scrollbar-color: #A4B4B6 rgba(112, 128, 144, 0.2);
 }
 ::-webkit-scrollbar {

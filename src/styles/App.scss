@@ -17,8 +17,11 @@ body {
 .header {
   color: #D8C8A6;
   padding: 30px 0;
-  background: rgb(50,42,40) url('../assets/img/bg-alhimi1.jpg') no-repeat 50% 100%;
+  background: rgb(50,42,40) url('../assets/img/bg-alhimi1.jpg') no-repeat 50% 100%/100% auto;
   text-align: center;
+  @media screen and (max-width: 1600px) {
+    background-size: auto auto;
+  }
   @media screen and (max-width: 768px) {
     padding: 15px 0 0;
   }
@@ -52,22 +55,28 @@ body {
 }
 
 .nav {
+  padding: 10px 0 20px;
+  text-align: center;
   font-size: 22px;
   font-family: "MagicCardsCyrillic";
   letter-spacing: 3px;
   @media screen and (max-width: 1024px) {
     font-size: 16px;
   }
+  @media screen and (max-width: 360px) {
+    letter-spacing: 1px;
+    font-size: 14px;
+  }
   & > * {
     margin: 0 4px;
     transition: opacity 0.7s ease;
-    &:hover {
+    &:not(.nav__item--active):hover {
       opacity: 0.5;
     }
   }
   &__item {
     &--active {
-      border-bottom: 2px solid currentColor;
+      color: rgb(210, 106, 106)!important;
       cursor: default;
     }
   }
@@ -77,13 +86,9 @@ h2 {
   margin-bottom: 10px;
 }
 
-.menu {
-  padding: 10px 0 20px;
+.selected {
+  margin: 0 0 10px;
   text-align: center;
-  &__selected {
-    max-width: 500px;
-    margin: 0 auto;
-  }
   b {
     letter-spacing: 1px;
   }
@@ -100,11 +105,19 @@ h2 {
   }
 }
 
+.main {
+  padding: 0 0 30px;
+}
+
 .btn {
   height: 20px;
   width: 20px;
   margin-top: 2px;
   margin-left: 6px;
+  transition: opacity 1s ease;
+  &:hover {
+    opacity: 0.6;
+  }
   @media screen and (max-width: 1024px) {
     height: 16px;
     width: 16px;
@@ -117,37 +130,36 @@ h2 {
   }
 }
 
-.card-item, 
-.card-table {
+.card {
   background: rgba(255,255,255,0.2);
-  padding: 4px;
+  padding: 4px 6px;
+  margin: 2px 1px 0;
   cursor: pointer;
+  &:hover {
+    background: #d2d1d1cc;
+    color: #272626;
+  } 
   &--active {
     background: #272626;
     color: rgba(255,255,255,0.8);
   }
-  &:hover {
-    background: #d2d1d1cc;
-    color: #272626;
-  }  
+  &--envy {
+    color: #d26a6a!important;
+  }
 }
 
-.card-item {
-  position: relative;
-  display: block;
-  margin: 2px 1px;
-  padding-right: 20px;
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   span {
-    position: absolute;
     font-size: 0.7em;
-    right: 4px;
-    top: 2px;
+    padding-left: 5px;
   }
 }
 
 .selectors {
   position: relative;
-  padding: 20px 0 30px;
   @media screen and (max-width: 768px) {
     padding-top: 0;
   }
@@ -170,7 +182,7 @@ h2 {
     height: 25px;
     width: calc(100% - 63px);
     margin: 0 1px;
-    padding: 4px;
+    padding: 4px 6px;
     border: none;
     background: none;
     border: 1px solid rgba(255,255,255,0.6);
@@ -199,18 +211,22 @@ h2 {
 .table {
   &__row {
     display: flex;
+    width: 100%;
     &--table {
       min-width: 480px;
+      & > * {
+        width: 20%;
+        display: flex;
+        align-items: center;
+      }
     }
-  }
-  &__item {
-    width: 20%;
-    margin: 1px;
-    display: flex;
-    align-items: center;
-    &-notes {
-      width: 50%;
-       margin: 1px;
+    &--notes {
+      & > * {
+        width: calc(50% - 10px);
+      }
+      .btn {
+        width: 20px;
+      }
     }
   }
   &__body {
@@ -235,7 +251,6 @@ h2 {
   }
 }
 
-
 .modalHover {
   position: absolute;
   background: #272626;
@@ -253,12 +268,8 @@ h2 {
   padding: 3px;
   font-size: 16px;
   font-variant: italic;
-  top: -15px;
+  top: -27px;
   left: 50%;
   transform: translateX(-50%);
   background: #41c665;
-}
-
-.props-envy {
-  color: #d26a6a!important;
 }
