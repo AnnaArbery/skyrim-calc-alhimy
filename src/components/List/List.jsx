@@ -3,7 +3,7 @@ import Card from '../Card'
 
 const List = ({list, selected, clickEvent, mouseEvent: {cb, selectedSublist}}) => (
   <div className='selectors__subcontent'>
-    {list?.length && list.map(item => 
+    {list.length && list.map(item => 
       <Card
         key={item.id}
         selected={selected.includes(item.id)}

@@ -13,15 +13,17 @@ import usePropsStore from '../store/usePropsStore';
 const Lists = () => {
   const { components } = useComponentsStore();
   const { properties } = usePropsStore();
-
-  const [modal, setModal] = useState({});
-  const [findComps, setSeachComp] = useState('');
-  const [findProps, setSearchProps] = useState('');
+  
   const [, setSavedFormulas] = useLocalStorage('savedFormula', []);
   const [statusSave, setStatusSave] = useState('');
+
+  const [modal, setModal] = useState({});
+
+
+  const [findComps, setSeachComp] = useState('');
+  const [findProps, setSearchProps] = useState(''); 
   const [selectedComponents, handleSelectedComponents] = useSelect([], 3);
   const [selectedProperties, handleSelectedProperties] = useSelect([], 5);
-
   const filteredComponents = useFilter(components, selectedProperties, filterListByList);
   const filteredProperties = useFilter(properties, getPropsFromComps(components, selectedComponents), filterListById);
 
@@ -111,13 +113,16 @@ const Lists = () => {
                     setSearchProps('');
                     handleSelectedProperties(id)}
                 }
-                mouseEvent={{cb: handleHover, selectedSublist: id => filterListByList(components, [id]) }}
+                mouseEvent={{
+                  cb: handleHover,
+                  selectedSublist: id => filterListByList(components, [id])
+                }}
               />
             </div>
           </div>
         </div>
       </div>
-      {modal.id && <Modal id={modal.id} coords={modal.coords} list={modal.list}/>}
+      {modal.id && <Modal coords={modal.coords} list={modal.list}/>}
     </>
   );
 };

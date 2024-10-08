@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
 const useSelect = (initialValue, count) => {
   const [selected, setSelect] = useState(initialValue);
