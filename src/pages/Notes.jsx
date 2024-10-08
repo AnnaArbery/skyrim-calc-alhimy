@@ -27,7 +27,7 @@ const Notes = observer(() => {
               <Card key={`${parentID}-2`} >
                 <Card.NoteItem list={filterListById(properties, props)}/>
               </Card>
-              <button className='btn btn--del' onClick={() => handleDelete(parentID)}>&nbsp;</button>
+              <button className='btn btn--del' onClick={() => handleDelete(parentID)} label='delete'>&nbsp;</button>
             </div>
           )}
           {notes.length > 0 && notes.map(({comps, props}, parentID) => 
@@ -38,7 +38,7 @@ const Notes = observer(() => {
               <Card key={`${parentID}-4`} >
                 <Card.NoteItem list={filterListById(properties, props)}/>
               </Card>
-              <button className='btn' onClick={handleDelete} style={{'visibility':'hidden'}}>&nbsp;</button>
+              <button className='btn' onClick={handleDelete} style={{'visibility':'hidden'}} label='hidden'>&nbsp;</button>
             </div>
           )}
         </div>

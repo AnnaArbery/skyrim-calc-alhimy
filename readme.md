@@ -11,4 +11,6 @@
 - Все данные хранятся в json-файлах
 
 ### Переменные окружени
-URL_COMPONENTS, URL_PROPS, URL_NOTES
+URL_COMPONENTS="./store/props.json"  
+URL_PROPS="./store/props.json"  
+URL_NOTES="./store/notes.json"  

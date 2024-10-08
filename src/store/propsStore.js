@@ -1,9 +1,9 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import fetchData from '../api/fetchData.js'
 
 class PropsStore {
-  props = [];
-  selected = [];
+  props = []
+  selected = []
 
   constructor() {
     makeAutoObservable(this);
@@ -21,8 +21,15 @@ class PropsStore {
   }
 
   fetch = async () => {
-    const props  = await fetchData(process.env.URL_PROPS);
-    this.props = props;
+    try {
+      const props  = await fetchData(process.env.URL_PROPS);
+      runInAction(() => {
+        this.props = props;
+      })   
+
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 

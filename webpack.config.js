@@ -103,7 +103,7 @@ function useCss(options = {}) {
     MiniCssExtractPlugin.loader,
     {
       loader: 'css-loader',
-      options: options,
+      options,
     },
     {
       loader: 'postcss-loader',
@@ -125,7 +125,7 @@ const configImg = {
     filename: 'img/[name][ext]'
   }
 }
-if(MODE == 'production') {
+if(MODE === 'production') {
   configImg.use = [
     {
       loader: 'image-webpack-loader',

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import fetchData from '../api/fetchData.js'
 
 class ComponentsStore {
@@ -21,8 +21,14 @@ class ComponentsStore {
   }
   
   fetch = async () => {
-    const components  = await fetchData(process.env.URL_COMPONENTS);
-    this.components = components;
+    try {
+      const components  = await fetchData(process.env.URL_COMPONENTS);
+      runInAction(() => {
+        this.components = components;
+      })      
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 
