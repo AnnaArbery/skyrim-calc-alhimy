@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import List from '../components/List/List'
-import Modal from '../components/Modal'
+import Dropdown from '../components/Dropdown'
 import Header from '../components/List/Header'
 import Selected from '../components/List/Selected'
 import useFilter from '../hooks/useFilter'
@@ -10,31 +10,23 @@ import { filterListByList, filterListById, getPropsFromComps, findByName } from 
 import useComponentsStore from '../store/useComponentsStore';
 import usePropsStore from '../store/usePropsStore';
 
+import useHoverDropdown from '../hooks/useHoverDropdown';
+
 const Lists = () => {
   const { components } = useComponentsStore();
   const { properties } = usePropsStore();
   
-  const [, setSavedFormulas] = useLocalStorage('savedFormula', []);
-  const [statusSave, setStatusSave] = useState('');
+  const [ , setSavedFormulas ] = useLocalStorage('savedFormula', []);
+  const [ statusSave, setStatusSave ] = useState('');
 
-  const [modal, setModal] = useState({});
+  const { dropdown, isShowDropdown, handleHover } = useHoverDropdown()
 
-
-  const [findComps, setSeachComp] = useState('');
-  const [findProps, setSearchProps] = useState(''); 
-  const [selectedComponents, handleSelectedComponents] = useSelect([], 3);
-  const [selectedProperties, handleSelectedProperties] = useSelect([], 5);
+  const [ findComps, setSeachComp ] = useState('');
+  const [ findProps, setSearchProps ] = useState(''); 
+  const [ selectedComponents, handleSelectedComponents] = useSelect([], 3);
+  const [ selectedProperties, handleSelectedProperties] = useSelect([], 5);
   const filteredComponents = useFilter(components, selectedProperties, filterListByList);
   const filteredProperties = useFilter(properties, getPropsFromComps(components, selectedComponents), filterListById);
-
-  const handleHover = (e, id, subList) => {
-    const coords = e.target.getBoundingClientRect();
-
-    const options = id
-      ? {id, list: subList, coords: {x: coords.left, y: coords.top + coords.height + window.scrollY}}
-      : {};
-    setModal(options);
-  }
   
   const handleReset = () => {
     handleSelectedComponents(null);
@@ -122,7 +114,7 @@ const Lists = () => {
           </div>
         </div>
       </div>
-      {modal.id && <Modal coords={modal.coords} list={modal.list}/>}
+      {isShowDropdown && <Dropdown coords={dropdown.coords} list={dropdown.list}/>}
     </>
   );
 };

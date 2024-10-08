@@ -1,21 +1,27 @@
 import { useState } from 'react';
 
 const useHoverDropdown = () => {
-  const [modal, setModal] = useState({});
+  const [dropdown, setDropdown] = useState({});
 
   const handleHover = (e, id, subList) => {
-    const coords = e.target.getBoundingClientRect();
+    const coords = e.target.getBoundingClientRect(); 
 
     const options = id
-      ? {id, list: subList, coords: {x: coords.left, y: coords.top + coords.height + window.scrollY}}
+      ? {
+        id,
+        list: subList,
+        coords: {
+          x: coords.left,
+          y: coords.top + coords.height + window.scrollY
+        }
+      }
       : {};
-    setModal(options);
+    setDropdown(options);
   }
 
   return {
-    isShow: !!modal.id,
-    modal,
-    setModal,
+    isShowDropdown: !!dropdown.id,
+    dropdown,
     handleHover
   }
 }
