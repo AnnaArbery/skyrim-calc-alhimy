@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react-lite';
 import List from '../components/List/List'
 import Modal from '../components/Modal'
 import Header from '../components/List/Header'
@@ -8,12 +7,13 @@ import useFilter from '../hooks/useFilter'
 import useLocalStorage from '../hooks/useLocalStorage'
 import useSelect from '../hooks/useSelect'
 import { filterListByList, filterListById, getPropsFromComps, findByName } from '../assets/utilits'
-import ComponentsStore from '../store/componentsStore';
-import PropsStore from '../store/propsStore';
+import useComponentsStore from '../store/useComponentsStore';
+import usePropsStore from '../store/usePropsStore';
 
-const Lists = observer(() => {
-  const { components } = ComponentsStore;
-  const { props: properties } = PropsStore;
+const Lists = () => {
+  const { components } = useComponentsStore();
+  const { properties } = usePropsStore();
+
   const [modal, setModal] = useState({});
   const [findComps, setSeachComp] = useState('');
   const [findProps, setSearchProps] = useState('');
@@ -120,6 +120,6 @@ const Lists = observer(() => {
       {modal.id && <Modal id={modal.id} coords={modal.coords} list={modal.list}/>}
     </>
   );
-});
+};
 
 export default Lists;

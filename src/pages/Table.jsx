@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react-lite';
 import useFilter from '../hooks/useFilter';
-import {filterListByList, filterListById} from '../assets/utilits';
+import { filterListByList, filterListById } from '../assets/utilits';
 import Card from '../components/Card';
-import ComponentsStore from '../store/componentsStore';
-import PropsStore from '../store/propsStore';
+import useComponentsStore from '../store/useComponentsStore';
+import usePropsStore from '../store/usePropsStore';
 
-const Table = observer(() => {
-  const { components } = ComponentsStore;
-  const { props: properties } = PropsStore;
+const Table = () => {
+  const { components } = useComponentsStore();
+  const { properties } = usePropsStore();
 
   const [selected, setSelected] = useState([]);
   const filteredComponents = useFilter(components, selected, filterListByList);
@@ -38,6 +37,6 @@ const Table = observer(() => {
       </div>
     </div>
   )
-});
+};
 
 export default Table;

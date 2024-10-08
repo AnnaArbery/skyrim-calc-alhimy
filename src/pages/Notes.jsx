@@ -1,17 +1,17 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import useFetch from '../hooks/useFetch';
 import { filterListById } from '../assets/utilits';
 import useLocalStorage from '../hooks/useLocalStorage';
 import Card from '../components/Card';
-import ComponentsStore from '../store/componentsStore';
-import PropsStore from '../store/propsStore';
 
-const Notes = observer(() => {
-  const [notes] = useFetch(process.env.URL_NOTES);
-  const { components } = ComponentsStore;
-  const { props: properties } = PropsStore;
-  const [savedFormulas, setSavedFormulas] = useLocalStorage('savedFormula', []);
+import useComponentsStore from '../store/useComponentsStore';
+import usePropsStore from '../store/usePropsStore';
+
+const Notes = () => {
+  const { components } = useComponentsStore();
+  const { properties } = usePropsStore();
+  const [ notes ] = useFetch(process.env.URL_NOTES);
+  const [ savedFormulas, setSavedFormulas ] = useLocalStorage('savedFormula', []);
 
   const handleDelete = id => setSavedFormulas(prev => prev.filter(list => list.id !== id))
 
@@ -45,6 +45,6 @@ const Notes = observer(() => {
       </div>
     </div>
   )
-});
+};
 
 export default Notes;

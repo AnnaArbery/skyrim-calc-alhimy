@@ -20,12 +20,11 @@
   "dependencies": {
     "clsx": "^2.1.0",
     "dotenv-webpack": "^8.0.1",
-    "mobx": "^6.12.3",
-    "mobx-react-lite": "^4.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
-    "style-loader": "^3.3.4"
+    "style-loader": "^3.3.4",
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.5",

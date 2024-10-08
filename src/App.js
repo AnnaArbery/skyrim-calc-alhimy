@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
-import './styles/App.scss'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout';
 import About from './pages/About'
 import Table from './pages/Table'
 import Notes from './pages/Notes'
 import Lists from './pages/Lists'
-import ComponentsStore from './store/componentsStore'
-import PropsStore from './store/propsStore'
+import './styles/App.scss'
+
+import useComponentsStore from './store/useComponentsStore';
+import usePropsStore from './store/usePropsStore';
 
 function App() {
+  const { fetch: fetchComponents } = useComponentsStore();
+  const { fetch: fetchProperties } = usePropsStore();
   useEffect(() => {
-    ComponentsStore.fetch();
-    PropsStore.fetch();
+    fetchComponents();    
+    fetchProperties();
   }, []);
 
   return (
