@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     fetchComponents();    
     fetchProperties();
-  }, []);
+  }, [fetchComponents, fetchProperties]);
 
   return (
     <div className='App'>

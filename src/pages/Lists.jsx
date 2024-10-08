@@ -4,27 +4,25 @@ import Dropdown from '../components/Dropdown'
 import Header from '../components/List/Header'
 import Selected from '../components/List/Selected'
 import useFilter from '../hooks/useFilter'
-import useLocalStorage from '../hooks/useLocalStorage'
 import useSelect from '../hooks/useSelect'
+import useHoverDropdown from '../hooks/useHoverDropdown';
+import useSaveFormula from '../hooks/useSaveFormula';
 import { filterListByList, filterListById, getPropsFromComps, findByName } from '../assets/utilits'
 import useComponentsStore from '../store/useComponentsStore';
 import usePropsStore from '../store/usePropsStore';
 
-import useHoverDropdown from '../hooks/useHoverDropdown';
 
 const Lists = () => {
   const { components } = useComponentsStore();
   const { properties } = usePropsStore();
   
-  const [ , setSavedFormulas ] = useLocalStorage('savedFormula', []);
-  const [ statusSave, setStatusSave ] = useState('');
+  const { isShowDropdown, dropdown, handleHover } = useHoverDropdown();
+  const { statusSave, saveFormula } = useSaveFormula();
 
-  const { dropdown, isShowDropdown, handleHover } = useHoverDropdown()
-
-  const [ findComps, setSeachComp ] = useState('');
-  const [ findProps, setSearchProps ] = useState(''); 
-  const [ selectedComponents, handleSelectedComponents] = useSelect([], 3);
-  const [ selectedProperties, handleSelectedProperties] = useSelect([], 5);
+  const [ searchComp, setSearchComp ] = useState('');
+  const [ searchProp, setSearchProp ] = useState(''); 
+  const [ selectedComponents, handleSelectedComponents ] = useSelect([], 3);
+  const [ selectedProperties, handleSelectedProperties ] = useSelect([], 5);
   const filteredComponents = useFilter(components, selectedProperties, filterListByList);
   const filteredProperties = useFilter(properties, getPropsFromComps(components, selectedComponents), filterListById);
   
@@ -34,21 +32,9 @@ const Lists = () => {
   }
 
   const handleSave = () => {
-    setSavedFormulas(prev => [...prev, {
-      id: +new Date(),
-      comps: [...selectedComponents],
-      props: [...selectedProperties]
-    }]);
-
+    saveFormula(selectedComponents, selectedProperties)
     handleReset();
-    setStatusSave(true);
-
-    setTimeout(() => {
-      setStatusSave(false);
-    }, 1500)
   }
-
-  const handleSearch = (e, cb) => cb(e.target.value)
 
   return (
     <>
@@ -72,16 +58,18 @@ const Lists = () => {
           <div className='selectors__row'>
             <div className='selectors__col'>
               <Header
-                value={findComps}
-                handler={e => handleSearch(e, setSeachComp)}
-                handleReset={handleReset} handleSave={handleSave}
+                value={searchComp}
+                handler={e => setSearchComp(e.target.value)}
+                handleReset={handleReset}
+                handleSave={handleSave}
+                handleClear={e => setSearchComp('')}
               />
               <List
-                list={findByName(filteredComponents, findComps)}
+                list={findByName(filteredComponents, searchComp)}
                 selected={selectedComponents}
                 clickEvent={
                   id => {
-                    setSeachComp('');
+                    setSearchComp('');
                     handleSelectedComponents(id)}
                 }
                 mouseEvent={{
@@ -92,17 +80,18 @@ const Lists = () => {
             </div>
             <div className='selectors__col'>
               <Header
-                value={findProps}
-                handler={e => handleSearch(e, setSearchProps)}
+                value={searchProp}
+                handler={e => setSearchProp(e.target.value)}
                 handleReset={handleReset}
                 handleSave={handleSave}
+                handleClear={e => setSearchProp('')}
               />
               <List
-                list={findByName(filteredProperties, findProps)}
+                list={findByName(filteredProperties, searchProp)}
                 selected={selectedProperties}
                 clickEvent={
                   id => {
-                    setSearchProps('');
+                    setSearchProp('');
                     handleSelectedProperties(id)}
                 }
                 mouseEvent={{

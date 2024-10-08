@@ -128,6 +128,11 @@ h2 {
   &--save {
     background: url('../assets/img/save.svg') no-repeat 50% 50%/100% 100%;
   }
+  &--clear {
+    font-size: 16px;
+    position: absolute;
+    right: 83px;
+  }
 }
 
 .card {
@@ -181,6 +186,7 @@ h2 {
       margin-top: 5px;
   }
   &__subhead {
+    position: relative;
     display: flex;
   }
   &__input {
