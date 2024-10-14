@@ -1,17 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const Card = ({selected, type, children}) => (
-  <div className={`card${selected ? ' card--active':''}${type == 0 ? ' card--envy' : ''}`}>
-    {children}
-  </div>
-)
+const Card = ({selected, type, children, sublist}) => {
+  const [isShowDropdown, setShowDropdown] = useState(false);
 
-const ListItem = ({object: {id, name, cost}, clickEvent, mouseEvent}) => (
+  return (
+    <div
+      className={`card${selected ? ' card--active':''}${type === '0' ? ' card--envy' : ''}`}
+      onMouseEnter={() => setShowDropdown(true)}
+      onMouseLeave={() => setShowDropdown(false)}
+    >
+      {children}
+      {isShowDropdown && !!sublist?.length &&
+        <div className='dropdown'>
+          {sublist.map(subitem => <div key={subitem.id}>{subitem.name}</div>)}
+        </div>
+      }
+    </div>
+  )
+}  
+
+const ListItem = ({object: {id, name, cost}, clickEvent}) => (
   <button
     className='listItem'
     onClick={() => clickEvent(id)}
-    onMouseEnter={e => mouseEvent(e, id)}
-    onMouseLeave={e => mouseEvent(e, null)}
   >
     {name}
     <span>{cost}</span>

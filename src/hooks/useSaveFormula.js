@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import useLocalStorage from './useLocalStorage';
-
+import { toast } from 'react-toastify';
 
 const useSaveFormula = () => {
   const [ , setSavedFormulas ] = useLocalStorage('savedFormula', []);
-  const [ statusSave, setStatusSave ] = useState('');
 
   const saveFormula = ( selectedComponents, selectedProperties ) => {
     setSavedFormulas(prev => [...prev, {
@@ -13,15 +11,13 @@ const useSaveFormula = () => {
       props: [...selectedProperties]
     }]);
 
-    setStatusSave(true);
-
-    setTimeout(() => {
-      setStatusSave(false);
-    }, 1500)
+    toast.success('Сохранено в заметки', {
+      position: 'top-center',
+      icon: false,
+    });
   }
 
   return {
-    statusSave,
     saveFormula
   }
 }
