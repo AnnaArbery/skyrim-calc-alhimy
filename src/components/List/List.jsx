@@ -6,7 +6,7 @@ const List = ({list, selected, clickEvent, getSublist}) => (
     {!!list.length && list.map(item => 
       <Card
         key={item.id}
-        selected={selected.includes(item.id)}
+        selected={selected.some(select => select.id === item.id)}
         type={item.type}
         sublist={getSublist(item.id)}
       >

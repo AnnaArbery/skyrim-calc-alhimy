@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useFilter from '../hooks/useFilter';
-import { filterListByList, filterListById } from '../assets/utilits';
+import { filterListByList, filterListById } from '../utilits';
 import Card from '../components/Card';
 import useComponentsStore from '../store/useComponentsStore';
 import usePropsStore from '../store/usePropsStore';

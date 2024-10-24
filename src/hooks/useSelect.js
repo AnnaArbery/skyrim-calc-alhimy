@@ -1,22 +1,25 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
-const useSelect = (initialValue, count) => {
-  const [selected, setSelect] = useState(initialValue);
+const useSelect = ({max, useHookStore }) => {
+  const { selected, add, remove, reset } = useHookStore();
 
-  const handleSelect = id => {
-    if (id === null) {
-      setSelect([]);
-      return;
-    }
+  const handleSelect = item => {
+    const hasSelected = selected.some(select => select.id === item.id)
 
-    if (selected.length > 0 && selected.includes(id)) {
-      setSelect(prev => prev.filter(item => item !== id) )
-    } else if (selected.length < count) {
-      setSelect(prev => [...prev, id] )
+    if (!item?.id) {
+      reset();
+    } else if (!!selected.length && hasSelected) {
+      remove(item);
+    } else if (selected.length < max) {
+      add(item);
     }
   }
 
-  return [selected, handleSelect];
+  return { 
+    selected,
+    handleSelect,
+    reset
+  };
 }
 
 export default useSelect;

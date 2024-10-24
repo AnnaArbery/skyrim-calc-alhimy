@@ -1,6 +1,6 @@
 import React from 'react';
 import useFetch from '../hooks/useFetch';
-import { filterListById } from '../assets/utilits';
+import { filterListById } from '../utilits';
 import useLocalStorage from '../hooks/useLocalStorage';
 import Card from '../components/Card';
 

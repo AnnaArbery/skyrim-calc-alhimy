@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import List from '../components/List/List'
 import Header from '../components/List/Header'
 import Selected from '../components/List/Selected'
 import useFilter from '../hooks/useFilter'
-import useSelect from '../hooks/useSelect'
+// import useSelect from '../hooks/useSelect0'
 import useSaveFormula from '../hooks/useSaveFormula';
-import { filterListByList, filterListById, getPropsFromComps, findByName } from '../assets/utilits'
+import { filterListByList, filterListById, getPropsFromComps, findByName } from '../utilits'
 import useComponentsStore from '../store/useComponentsStore';
 import usePropsStore from '../store/usePropsStore';
+
+import useSelect from '../hooks/useSelect'
 
 const Lists = () => {
   const { components } = useComponentsStore();
@@ -15,76 +17,122 @@ const Lists = () => {
   
   const { saveFormula } = useSaveFormula();
 
-  const [ searchComp, setSearchComp ] = useState('');
-  const [ searchProp, setSearchProp ] = useState(''); 
-  const [ selectedComponents, handleSelectedComponents ] = useSelect([], 3);
-  const [ selectedProperties, handleSelectedProperties ] = useSelect([], 5);
-  const filteredComponents = useFilter(components, selectedProperties, filterListByList);
-  const filteredProperties = useFilter(properties, getPropsFromComps(components, selectedComponents), filterListById);
+  const {
+    selected: selectedComps,
+    handleSelect: handleSelectComps,
+    reset: resetComps
+  } = useSelect({
+    useHookStore: useComponentsStore,
+    max: 3
+  });
+
+  const {
+    selected: selectedProps,
+    handleSelect: handleSelectProps,
+    reset: resetProps
+  } = useSelect({
+    useHookStore: usePropsStore,
+    max: 5
+  });
+
+  // const [ searchComp, setSearchComp ] = useState('');
+  // const [ searchProp, setSearchProp ] = useState('');
+
+  const {
+    filtered: filteredComponents,
+    changeFilter: changeFilterComps,
+    options: optionsComps
+  } = useFilter({
+    list: components,
+    selected: selectedProps,
+    filters: ['filter.comps']
+  });
+
+  const {
+    filtered: filteredProperties,
+    changeFilter: changeFilterProps,
+    options: optionsProps
+  } = useFilter({
+    list: properties,
+    selected: selectedComps,
+    filters: ['filter.props']
+  });
+
+  // const [ selectedComponents, handleSelectedComponents ] = useSelect([], 3);
+  // const [ selectedProperties, handleSelectedProperties ] = useSelect([], 5);
+  // const filteredComponents = useFilter(components, selectedProperties, filterListByList);
+  // const filteredProperties = useFilter(properties, getPropsFromComps(components, selectedComponents), filterListById);
   
   const handleReset = () => {
-    handleSelectedComponents(null);
-    handleSelectedProperties(null);
+    resetComps();
+    resetProps();
   }
 
   const handleSave = () => {
-    saveFormula(selectedComponents, selectedProperties)
+    // saveFormula(selectedComponents, selectedProperties)
     handleReset();
   }
 
   return (
 
     <div className='selectors'>
+      {JSON.stringify(optionsComps)}
+      <br/>
+      {JSON.stringify(optionsProps)}
       <Selected>
-        {selectedComponents.length > 0 && <Selected.List
+        {!!selectedComps.length && <Selected.List
           title='Ингредиенты'
-          list={components}
-          selected={selectedComponents}
-          handleClick={handleSelectedComponents}
+          selected={selectedComps}
+          handleClick={handleSelectComps}
         />}
-        {selectedProperties.length > 0 && <Selected.List
+        {!!selectedProps.length && <Selected.List
           title='Эффекты'
-          list={properties}
-          selected={selectedProperties}
-          handleClick={handleSelectedProperties}
+          selected={selectedProps}
+          handleClick={handleSelectProps}
         />}
       </Selected>
       <div className='grid selectors__grid'>
         <div className='selectors__row'>
           <div className='selectors__col'>
             <Header
-              value={searchComp}
-              handler={e => setSearchComp(e.target.value)}
+              value={optionsComps.search}
+              // handler={e => setSearchComp(e.target.value)}
+              handler={e => changeFilterComps({search: e.target.value})}
               handleReset={handleReset}
               handleSave={handleSave}
-              handleClear={() => setSearchComp('')}
+              // handleClear={() => setSearchComp('')}
+              handleClear={() => changeFilterComps({search: ''})}
             />
             <List
-              list={findByName(filteredComponents, searchComp)}
-              selected={selectedComponents}
+              list={filteredComponents}
+              selected={selectedComps}
               clickEvent={
-                id => {
-                  setSearchComp('');
-                  handleSelectedComponents(id)}
+                (item) => {
+                  // setSearchComp('');
+                  handleSelectComps(item)
+                }
               }
               getSublist={id => filterListById(properties, getPropsFromComps(components, [id]))}
             />
           </div>
           <div className='selectors__col'>
             <Header
-              value={searchProp}
-              handler={e => setSearchProp(e.target.value)}
+              value={optionsProps.search}
+              // handler={e => setSearchProp(e.target.value)}
+              handler={e => changeFilterProps({search: e.target.value})}
               handleReset={handleReset}
               handleSave={handleSave}
-              handleClear={() => setSearchProp('')}
+              // handleClear={() => setSearchProp('')}
+              handleClear={() => changeFilterProps({search: ''})}
             />
             <List
-              list={findByName(filteredProperties, searchProp)}
-              selected={selectedProperties}
+              list={filteredProperties}
+              selected={selectedProps}
               clickEvent={
-                id => {
-                  setSearchProp('');
-                  handleSelectedProperties(id)}
+                (item) => {
+                  // setSearchProp('');
+                  handleSelectProps(item)
+                }
               }
               getSublist={id => filterListByList(components, [id])}
             />

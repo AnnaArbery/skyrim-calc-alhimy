@@ -135,8 +135,10 @@ h2 {
   text-align: left;
   cursor: pointer;
   &:hover {
-    background: #B2AFAF;
-    color: #272626;
+    @media screen and (min-width: 769px) {
+      background: #B2AFAF;
+      color: #272626;
+    }
     .dropdown {
       display: block;
     }
@@ -167,7 +169,7 @@ h2 {
       overflow: auto;
       max-height: 55vh;
       margin-top: 5px;
-      padding-bottom: 50px;
+      padding-bottom: 120px;
   }
   &__subhead {
     position: relative;
@@ -230,12 +232,17 @@ h2 {
   position: absolute;
   background: #272626;
   color: #fff;
-  padding: 7px;
-  font-size: 0.8em;
+  padding: 7px 0;
+  font-size: 0.9em;
   top: 75%;
   left: 0;
   z-index: 999;
-  // pointer-events:none;  
+  // max-height: 120px;
+  // overflow: auto;
+  // pointer-events:none;
+  & > * {
+    padding: 3px 10px;
+  }
 }
 
   // page table

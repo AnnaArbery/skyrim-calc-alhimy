@@ -1,19 +1,34 @@
 ﻿import { create } from 'zustand';
+import { devtools } from 'zustand/middleware'
 import fetchData from '../api/fetchData'
 
-const useComponentsStore = create((set) => ({
+const useComponentsStore = create( devtools((set, get) => ({
   components: [],
-  // selected: [],
-  // addSelected: (id) => {
+  selected: [],
+  // toggleSelected: (item) => {
+  //   const isItemSelected = get().selected.some(select => select.id === item.id);
+
   //   set(state => ({
-  //     selected: [...state.selected, id]
-  //   }))
+  //     selected: !isItemSelected
+  //       ? [...state.selected, item].sort((a, b) => a.name > b.name ? 1 : -1)
+  //       : [...state.selected.filter(comp => comp.id !== item.id)]
+  //   }));
   // },
-  // removeSelected: (id) => {
-  //   set(state => ({
-  //     selected: [...state.selected.filter(comp => comp.id !== id)]
-  //   }))
-  // },
+  add: (item) => {    
+    set(state => ({
+      selected: [...state.selected, item].sort((a, b) => a.name > b.name ? 1 : -1)
+    }));
+  },
+  remove: (item) => {
+    set(state => ({
+      selected: [...state.selected.filter(comp => comp.id !== item.id)]
+    }));
+  },
+  reset: () => {
+    set(() => ({
+      selected: []
+    }));
+  },
   fetch: async () => {
     try {
       const components  = await fetchData(process.env.URL_COMPONENTS);
@@ -22,6 +37,6 @@ const useComponentsStore = create((set) => ({
       console.log(e)
     }
   }
-}));
+})));
 
 export default useComponentsStore;

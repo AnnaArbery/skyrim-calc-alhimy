@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+// import useComponentsStore from '../store/useComponentsStore';
 
 const Card = ({selected, type, children, sublist}) => {
   const [isShowDropdown, setShowDropdown] = useState(false);
@@ -19,13 +20,13 @@ const Card = ({selected, type, children, sublist}) => {
   )
 }  
 
-const ListItem = ({object: {id, name, cost}, clickEvent}) => (
+const ListItem = ({object, clickEvent}) => (
   <button
     className='listItem'
-    onClick={() => clickEvent(id)}
+    onClick={() => clickEvent(object)}
   >
-    {name}
-    <span>{cost}</span>
+    {object.name}
+    <span>{object.cost}</span>
   </button>
 );
 
