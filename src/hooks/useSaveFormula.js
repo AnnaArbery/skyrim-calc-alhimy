@@ -1,10 +1,18 @@
-import useLocalStorage from './useLocalStorage';
 import { toast } from 'react-toastify';
+import useLocalStorage from './useLocalStorage';
 
 const useSaveFormula = () => {
   const [ , setSavedFormulas ] = useLocalStorage('savedFormula', []);
 
   const saveFormula = ( selectedComponents, selectedProperties ) => {
+    if (!selectedComponents.length || !selectedProperties.length) {
+      toast.error('Выберите компоненты и свойства', {
+        position: 'top-center',
+        icon: false,
+      });
+      return
+    }
+
     setSavedFormulas(prev => [...prev, {
       id: +new Date(),
       comps: [...selectedComponents],

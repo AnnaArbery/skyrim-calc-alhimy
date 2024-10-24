@@ -9,8 +9,8 @@ const Selected = ({children}) => (
 const List = ({title, selected, handleClick}) => (
   <div className='selected__list'>
     <b>{title}: </b>
-    {selected.length && selected.map((item) =>
-      <button key={item.id} onClick={()=>handleClick(item)}>{item.name}</button>
+    {!!selected.length && selected.map((item) =>
+      <button className='btn-small' key={item.id} onClick={()=>handleClick(item)}>{item.name}</button>
     )}
     <br/>
   </div>
