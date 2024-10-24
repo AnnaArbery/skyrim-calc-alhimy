@@ -2,7 +2,7 @@
 import { devtools } from 'zustand/middleware'
 import fetchData from '../api/fetchData'
 
-const useComponentsStore = create( devtools((set, get) => ({
+const useComponentsStore = create( devtools((set) => ({
   components: [],
   selected: [],
   // toggleSelected: (item) => {

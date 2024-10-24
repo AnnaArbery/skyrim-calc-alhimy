@@ -40,28 +40,27 @@ const Lists = () => {
 
   const {
     filtered: filteredComponents,
-    changeFilter: changeFilterComps,
+    changeOption: changeFilterComps,
     options: optionsComps
   } = useFilter({
     list: components,
     selected: selectedProps,
-    filters: ['filter.comps']
+    filters: {
+      select: [ 'filter.comps', selectedProps ]
+    }
   });
 
   const {
     filtered: filteredProperties,
-    changeFilter: changeFilterProps,
+    changeOption: changeFilterProps,
     options: optionsProps
   } = useFilter({
     list: properties,
     selected: selectedComps,
-    filters: ['filter.props']
+    filters: {
+      select: [ 'filter.props', selectedComps ]
+    }
   });
-
-  // const [ selectedComponents, handleSelectedComponents ] = useSelect([], 3);
-  // const [ selectedProperties, handleSelectedProperties ] = useSelect([], 5);
-  // const filteredComponents = useFilter(components, selectedProperties, filterListByList);
-  // const filteredProperties = useFilter(properties, getPropsFromComps(components, selectedComponents), filterListById);
   
   const handleReset = () => {
     resetComps();
@@ -95,7 +94,7 @@ const Lists = () => {
         <div className='selectors__row'>
           <div className='selectors__col'>
             <Header
-              value={optionsComps.search}
+              value={optionsComps.search[1]}
               // handler={e => setSearchComp(e.target.value)}
               handler={e => changeFilterComps({search: e.target.value})}
               handleReset={handleReset}
@@ -117,7 +116,7 @@ const Lists = () => {
           </div>
           <div className='selectors__col'>
             <Header
-              value={optionsProps.search}
+              value={optionsProps.search[1]}
               // handler={e => setSearchProp(e.target.value)}
               handler={e => changeFilterProps({search: e.target.value})}
               handleReset={handleReset}
