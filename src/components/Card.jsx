@@ -7,7 +7,7 @@ const Card = ({selected, type, children}) => (
   </div>
 )
 
-const ListItem = ({object, handlerClick, sublist}) => {
+const ListItem = ({object, handlerClick, sublist, sublistSelected, handlerClickSublist}) => {
   const [isShowDropdown, setShowDropdown] = useState(false);
   
   return (
@@ -25,9 +25,11 @@ const ListItem = ({object, handlerClick, sublist}) => {
       {isShowDropdown && !!sublist?.length &&
         <div className='dropdown'>
           {sublist.map(subitem =>
-            <div
+            <button
               key={subitem.id}
-            >{subitem.name}</div>
+              className={sublistSelected.some(select => select.id === subitem.id) ? 'active': ''}
+              onClick={() => handlerClickSublist(subitem)}
+            >{subitem.name}</button>
           )}
         </div>
       }  

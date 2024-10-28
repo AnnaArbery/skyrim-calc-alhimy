@@ -241,7 +241,7 @@ h2 {
 .dropdown {
   display: none;
   position: absolute;
-  background: #272626;
+  background: #444343;
   color: #fff;
   padding: 7px 0;
   font-size: 0.9em;
@@ -251,8 +251,15 @@ h2 {
   // max-height: 120px;
   // overflow: auto;
   // pointer-events:none;
-  & > * {
+  button {
+    display: block;
+    width: 100%;
+    text-align: left;
     padding: 3px 10px;
+  }
+  .active {
+    text-decoration: underline;
+    background: #625e5e;;
   }
 }
 

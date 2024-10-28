@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../Card'
 
-const List = ({list, selected, clickEvent, getSublist}) => (
+const List = ({list, selected, handlerClick, getSublist, sublistSelected, handlerClickSublist}) => (
   <div className='selectors__subcontent'>
     {!!list.length && list.map(item => 
       <Card
@@ -11,8 +11,10 @@ const List = ({list, selected, clickEvent, getSublist}) => (
       >
         <Card.ListItem          
           object={item}
-          handlerClick={clickEvent}
+          handlerClick={handlerClick}
           sublist={getSublist(item.id)}
+          sublistSelected={sublistSelected}
+          handlerClickSublist={handlerClickSublist}
         />
       </Card>
     )}

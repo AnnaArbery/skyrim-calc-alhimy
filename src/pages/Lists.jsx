@@ -88,7 +88,7 @@ const Lists = () => {
 
   const handlerSave = () => {
     saveFormula(selectedComps, selectedProps)
-    handleReset();
+    handlerReset();
   }
 
   const handlerUseful = () => {
@@ -124,13 +124,10 @@ const Lists = () => {
             <List
               list={sortedListComps}
               selected={selectedComps}
-              clickEvent={
-                (item) => {
-                  // setSearchComp('');
-                  handleSelectComps(item)
-                }
-              }
+              handlerClick={item => handleSelectComps(item)}
               getSublist={id => filterListById(properties, getPropsFromComps(components, [id]))}
+              sublistSelected={selectedProps}
+              handlerClickSublist={item => handleSelectProps(item)}
             />
           </div>
           <div className='selectors__col'>
@@ -148,13 +145,10 @@ const Lists = () => {
             <List
               list={sortedListProps}
               selected={selectedProps}
-              clickEvent={
-                (item) => {
-                  // setSearchProp('');
-                  handleSelectProps(item)
-                }
-              }
+              handlerClick={item => handleSelectProps(item)}
               getSublist={id => filterListByList(components, [id])}
+              sublistSelected={selectedComps}
+              handlerClickSublist={item => handleSelectComps(item)}
             />
           </div>
         </div>
