@@ -1,34 +1,38 @@
 import React, {useState} from 'react';
 // import useComponentsStore from '../store/useComponentsStore';
 
-const Card = ({selected, type, children, sublist}) => {
-  const [isShowDropdown, setShowDropdown] = useState(false);
+const Card = ({selected, type, children}) => (
+  <div className={`card${selected ? ' card--active':''}${type === '0' ? ' card--envy' : ''}`} >
+    {children}
+  </div>
+)
 
+const ListItem = ({object, handlerClick, sublist}) => {
+  const [isShowDropdown, setShowDropdown] = useState(false);
+  
   return (
     <div
-      className={`card${selected ? ' card--active':''}${type === '0' ? ' card--envy' : ''}`}
       onMouseEnter={() => setShowDropdown(true)}
       onMouseLeave={() => setShowDropdown(false)}
     >
-      {children}
+      <button
+        className='listItem'
+        onClick={() => handlerClick(object)}
+      >
+        {object.name}
+        <span>{object.cost}</span>
+      </button>
       {isShowDropdown && !!sublist?.length &&
         <div className='dropdown'>
-          {sublist.map(subitem => <div key={subitem.id}>{subitem.name}</div>)}
+          {sublist.map(subitem =>
+            <div
+              key={subitem.id}
+            >{subitem.name}</div>
+          )}
         </div>
-      }
+      }  
     </div>
-  )
-}  
-
-const ListItem = ({object, clickEvent}) => (
-  <button
-    className='listItem'
-    onClick={() => clickEvent(object)}
-  >
-    {object.name}
-    <span>{object.cost}</span>
-  </button>
-);
+)};
 
 const Td = ({handleClick, name}) => (
   <button

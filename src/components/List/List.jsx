@@ -8,11 +8,11 @@ const List = ({list, selected, clickEvent, getSublist}) => (
         key={item.id}
         selected={selected.some(select => select.id === item.id)}
         type={item.type}
-        sublist={getSublist(item.id)}
       >
         <Card.ListItem          
           object={item}
-          clickEvent={clickEvent}
+          handlerClick={clickEvent}
+          sublist={getSublist(item.id)}
         />
       </Card>
     )}

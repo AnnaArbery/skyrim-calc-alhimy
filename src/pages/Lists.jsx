@@ -78,26 +78,25 @@ const Lists = () => {
     handlerOrderSort: handlerOrderSortProps
   } = useSort({list: filteredProperties});
   
-  const handleReset = () => {
+  const handlerReset = () => {
     resetComps();
     resetProps();
+    setUseful(2);
+    handlerOrderSortComps('')
+    handlerOrderSortProps('')
   }
 
-  const handleSave = () => {
+  const handlerSave = () => {
     saveFormula(selectedComps, selectedProps)
     handleReset();
   }
 
-  const handleUseful = () => {
+  const handlerUseful = () => {
     setUseful(prev => (prev === FILTER_USEFUL.length - 1) ? 0 : prev + 1) 
   }
 
   return (
-
     <div className='selectors'>
-      {JSON.stringify(optionsComps)}
-      <br/>
-      {JSON.stringify(optionsProps)}
       <Selected>
         {!!selectedComps.length && <Selected.List
           title='Ингредиенты'
@@ -117,10 +116,10 @@ const Lists = () => {
               value={searchComps}
               sortOrder={sortOrderComps}              
               handlerSearch={e => changeFilterComps({search: e.target.value})}
-              handleReset={handleReset}
-              handleSave={handleSave}
-              handleClear={() => changeFilterComps({search: ''})}
-              handleSort={handlerOrderSortComps}
+              handlerReset={handlerReset}
+              handlerSave={handlerSave}
+              handlerClear={() => changeFilterComps({search: ''})}
+              handlerSort={handlerOrderSortComps}
             />
             <List
               list={sortedListComps}
@@ -140,11 +139,11 @@ const Lists = () => {
               useful={FILTER_USEFUL[useful] || FILTER_USEFUL[FILTER_USEFUL.length - 1] }
               sortOrder={sortOrderProps}              
               handlerSearch={e => changeFilterProps({search: e.target.value})}
-              handleReset={handleReset}
-              handleSave={handleSave}
-              handleClear={() => changeFilterProps({search: ''})}
-              handleUseful={handleUseful}
-              handleSort={handlerOrderSortProps}
+              handlerReset={handlerReset}
+              handlerSave={handlerSave}
+              handlerClear={() => changeFilterProps({search: ''})}
+              handlerUseful={handlerUseful}
+              handlerSort={handlerOrderSortProps}
             />
             <List
               list={sortedListProps}

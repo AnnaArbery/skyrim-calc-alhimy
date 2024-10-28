@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const filtersList = {
   'filter.search': (item, {search: [, value]}) => item.name.toLowerCase().includes(value.toLowerCase()),
@@ -16,20 +16,23 @@ const filtersList = {
   'filter.props': (item, {select: [, value]}) => value.some(comp => comp?.props?.includes(item.id)),
 }
 
-const FILTER_SEARCH = { search: [ 'filter.search', '' ] };
+const FILTER_DEFAULT = {
+  search: [ 'filter.search', '' ]
+};
 
 const useFilter = ({list, selected = [], useful = false, filters}) => {
   const [filtered, setFiltered] = useState(list || []);
   const [options, setOptions] = useState({
-    ...FILTER_SEARCH,
+    ...FILTER_DEFAULT,
     ...filters
   });
+  const refChangeOption = useRef();
 
-  const changeOption = (option) => {
+  refChangeOption.current = (option) => {
     const [name, value] = Object.entries(option).flat();
 
     setOptions(prev => {
-      if (!prev[name]) return {...prev};
+      if (!prev[name]) return { ...prev };
 
       const [ filtername ] = prev[name];
       
@@ -38,11 +41,11 @@ const useFilter = ({list, selected = [], useful = false, filters}) => {
   }
 
   useEffect(() => {
-    changeOption({select: selected});
+    refChangeOption.current({select: selected});
   }, [selected]);
 
   useEffect(() => {
-    changeOption({useful});
+    refChangeOption.current({useful});
   }, [useful]);
 
   useEffect(() => {
@@ -75,7 +78,7 @@ const useFilter = ({list, selected = [], useful = false, filters}) => {
 
   return {
     filtered,
-    changeOption,
+    changeOption: refChangeOption.current,
     options
   }
 }
