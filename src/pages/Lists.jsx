@@ -82,8 +82,8 @@ const Lists = () => {
     resetComps();
     resetProps();
     setUseful(2);
-    handlerOrderSortComps('')
-    handlerOrderSortProps('')
+    handlerOrderSortComps({ order:0 })
+    handlerOrderSortProps({ order: 0 })
   }
 
   const handlerSave = () => {

@@ -47,8 +47,8 @@ const Td = ({handleClick, name}) => (
 
 const NoteItem = ({list}) => (
   <div className='noteItem'>
-    {list.length && list.map(({name}, indx) =>
-      <div key={indx}>{name}</div>
+    {list.length && list.map(({id, name}) =>
+      <div key={id}>{name}</div>
     )}
   </div>
 );

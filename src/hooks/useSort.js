@@ -7,14 +7,18 @@ const useSort = ({ list }) => {
   const refSetSortedList = useRef();
 
   refSetSortedList.current = () => {
-    const newList = ( sortOrder === 0 )
+    const newList = ( sortOrder === 0  )
       ? [...list]
       : [...list].sort((a,b) => (sortOrder === 1) ? b.cost - a.cost : a.cost - b.cost);
 
     setSortedList(newList);
   }
 
-  refSortHandler.current = () => {
+  refSortHandler.current = ({order = false}) => {
+    if (order !== false) {
+      setSortOrder(order)
+      return;
+    }
     setSortOrder(prev => prev === 2 ? 0 : prev + 1);
   }
 

@@ -8,7 +8,7 @@ const HeaderList = ({value, useful, sortOrder, handlerSearch, handlerReset, hand
     <button className='btn btn--clear' onClick={handlerClear} title='Очистить поле' label='Очистить поле'>очистить</button>
     <button className='btn-small' onClick={handlerReset} title='Сбросить все выбранное' label='Сбросить все выбранное'>Сброс</button>
     <button className='btn-small' onClick={handlerSave} title='Сохранить локально в заметки' label='Сохранить локально в заметки'>В заметки</button>
-    <button className='btn-small' onClick={handlerSort} title='Сортировать по цене' label='Сортировать по цене'>
+    <button className='btn-small' onClick={handlerSort} title='Сортировать' label='Сортировать'>
       {!sortOrder && <>По имени <span>▼</span></>}
       {!!sortOrder && <>По цене <span>{SORT_LIST_COST[sortOrder]}</span></>}
     </button>
