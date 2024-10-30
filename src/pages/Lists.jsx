@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import List from '../components/List/List'
 import Header from '../components/List/Header'
 import Selected from '../components/List/Selected'
-import useFilter from '../hooks/useFilter'
+import useFilterList from '../hooks/useFilterList'
 import useSaveFormula from '../hooks/useSaveFormula';
 import { filterListByList, filterListById, getPropsFromComps } from '../utilits'
 import useComponentsStore from '../store/useComponentsStore';
@@ -41,7 +41,7 @@ const Lists = () => {
     filtered: filteredComponents,
     changeOption: changeFilterComps,
     options: optionsComps
-  } = useFilter({
+  } = useFilterList({
     list: components,
     selected: selectedProps,
     filters: {
@@ -53,7 +53,7 @@ const Lists = () => {
     filtered: filteredProperties,
     changeOption: changeFilterProps,
     options: optionsProps
-  } = useFilter({
+  } = useFilterList({
     list: properties,
     selected: selectedComps,
     useful: useful < 2 ? useful : '',
