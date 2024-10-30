@@ -10,13 +10,14 @@ const useSaveFormula = () => {
         position: 'top-center',
         icon: false,
       });
-      return
+      return 
     }
 
     setSavedFormulas(prev => [...prev, {
       id: +new Date(),
       comps: [...selectedComponents],
-      props: [...selectedProperties]
+      props: [...selectedProperties],
+      cost: 0
     }]);
 
     toast.success('Сохранено в заметки', {

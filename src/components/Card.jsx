@@ -29,7 +29,7 @@ const ListItem = ({object, handlerClick, sublist, sublistSelected, handlerClickS
               key={subitem.id}
               className={sublistSelected.some(select => select.id === subitem.id) ? 'active': ''}
               onClick={() => handlerClickSublist(subitem)}
-            >{subitem.name}</button>
+            >{subitem.name} <span>{subitem.cost}</span></button>
           )}
         </div>
       }  

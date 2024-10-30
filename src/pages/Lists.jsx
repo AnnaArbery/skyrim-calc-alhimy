@@ -107,6 +107,7 @@ const Lists = () => {
           title='Эффекты'
           selected={selectedProps}
           handleClick={handleSelectProps}
+          sum={selectedProps.length && selectedProps.reduce((acc, item) => acc + Number(item.cost), 0)}
         />}
       </Selected>
       <div className='grid selectors__grid'>
