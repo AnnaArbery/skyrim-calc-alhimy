@@ -16,8 +16,8 @@ const useSaveFormula = () => {
       ...prev,
       {
         id: +new Date(),
-        comps: [...selectedComponents],
-        props: [...selectedProperties],
+        comps: [...selectedComponents.map(item => item.id)],
+        props: [...selectedProperties.map(item => item.id)],
         cost: 0
       }
     ]);
