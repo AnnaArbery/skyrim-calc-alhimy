@@ -1,10 +1,8 @@
-// import { useState } from 'react';
-
-const useSelect = ({max, useHookStore }) => {
+const useSelect = ({ max, useHookStore }) => {
   const { selected, add, remove, reset } = useHookStore();
 
   const handleSelect = item => {
-    const hasSelected = selected.some(select => select.id === item.id)
+    const hasSelected = selected.some(select => select.id === item.id);
 
     if (!item?.id) {
       reset();
@@ -13,13 +11,13 @@ const useSelect = ({max, useHookStore }) => {
     } else if (selected.length < max) {
       add(item);
     }
-  }
+  };
 
-  return { 
+  return {
     selected,
     handleSelect,
     reset
   };
-}
+};
 
 export default useSelect;

@@ -1,15 +1,15 @@
-﻿import { create } from 'zustand';
-import fetchData from '../api/fetchData'
+import { create } from 'zustand';
+import fetchData from '../api/fetchData';
 
-const usePropsStore = create((set) => ({
+const usePropsStore = create(set => ({
   properties: [],
   selected: [],
-  add: (item) => {
+  add: item => {
     set(state => ({
-      selected: [...state.selected, item].sort((a, b) => a.name > b.name ? 1 : -1)
+      selected: [...state.selected, item].sort((a, b) => (a.name > b.name ? 1 : -1))
     }));
   },
-  remove: (item) => {
+  remove: item => {
     set(state => ({
       selected: [...state.selected.filter(comp => comp.id !== item.id)]
     }));
@@ -21,10 +21,10 @@ const usePropsStore = create((set) => ({
   },
   fetch: async () => {
     try {
-      const properties  = await fetchData(process.env.URL_PROPS);
-      set({ properties })
+      const properties = await fetchData(process.env.URL_PROPS);
+      set({ properties });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 }));

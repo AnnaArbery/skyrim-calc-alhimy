@@ -1,26 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
 
 const filtersList = {
-  'filter.search': (item, {search: [, value]}) => item.name.toLowerCase().includes(value.toLowerCase()),
-  'filter.useful': (item, {useful: [, value]}) => Number(item.type) === value,
-  'filter.comps': (item, {select: [, value]}) => {
+  'filter.search': (item, { search: [, value] }) =>
+    item.name.toLowerCase().includes(value.toLowerCase()),
+  'filter.useful': (item, { useful: [, value] }) => Number(item.type) === value,
+  'filter.comps': (item, { select: [, value] }) => {
     if (!item.props) return false;
 
-    for (let i = 0; i < item.props.length; i += 1 ) {
+    for (let i = 0; i < item.props.length; i += 1) {
       if (value.some(prop => prop.id === item.props[i])) {
         return true;
       }
     }
-    return false
+    return false;
   },
-  'filter.props': (item, {select: [, value]}) => value.some(comp => comp?.props?.includes(item.id)),
-}
-
-const FILTER_DEFAULT = {
-  search: [ 'filter.search', '' ]
+  'filter.props': (item, { select: [, value] }) =>
+    value.some(comp => comp?.props?.includes(item.id))
 };
 
-const useFilterList = ({list, selected = [], useful = false, filters}) => {
+const FILTER_DEFAULT = {
+  search: ['filter.search', '']
+};
+
+const useFilterList = ({ list, selected = [], useful = false, filters }) => {
   const [filtered, setFiltered] = useState(list || []);
   const [options, setOptions] = useState({
     ...FILTER_DEFAULT,
@@ -28,34 +30,32 @@ const useFilterList = ({list, selected = [], useful = false, filters}) => {
   });
   const refChangeOption = useRef();
 
-  refChangeOption.current = (option) => {
+  refChangeOption.current = option => {
     const [name, value] = Object.entries(option).flat();
 
     setOptions(prev => {
       if (!prev[name]) return { ...prev };
 
-      const [ filtername ] = prev[name];
-      
-      return {...prev, [name]: [filtername, value]}
-    })
-  }
+      const [filtername] = prev[name];
+
+      return { ...prev, [name]: [filtername, value] };
+    });
+  };
 
   useEffect(() => {
-    refChangeOption.current({select: selected});
+    refChangeOption.current({ select: selected });
   }, [selected]);
 
   useEffect(() => {
-    refChangeOption.current({useful});
+    refChangeOption.current({ useful });
   }, [useful]);
 
   useEffect(() => {
-
     const currentFilters = Object.keys(options).reduce((acc, option) => {
-
       const [name, value] = options[option];
 
-      if (value.length || typeof value === 'number' ) acc.push(name)
-      return acc;   
+      if (value.length || typeof value === 'number') acc.push(name);
+      return acc;
     }, []);
 
     if (!currentFilters.length) {
@@ -64,23 +64,22 @@ const useFilterList = ({list, selected = [], useful = false, filters}) => {
     }
 
     const filteredList = list.filter(item => {
-
-      for (let i = 0; i < currentFilters.length; i += 1 ) {
+      for (let i = 0; i < currentFilters.length; i += 1) {
         const namefilter = currentFilters[i];
-        if (!filtersList[ namefilter ](item, options)) return false;       
-      }      
+        if (!filtersList[namefilter](item, options)) return false;
+      }
 
       return true;
     });
 
-    setFiltered(filteredList)
+    setFiltered(filteredList);
   }, [list, options]);
 
   return {
     filtered,
     changeOption: refChangeOption.current,
     options
-  }
-}
+  };
+};
 
 export default useFilterList;

@@ -7,30 +7,31 @@ const useSort = ({ list }) => {
   const refSetSortedList = useRef();
 
   refSetSortedList.current = () => {
-    const newList = ( sortOrder === 0  )
-      ? [...list]
-      : [...list].sort((a,b) => (sortOrder === 1) ? b.cost - a.cost : a.cost - b.cost);
+    const newList =
+      sortOrder === 0
+        ? [...list]
+        : [...list].sort((a, b) => (sortOrder === 1 ? b.cost - a.cost : a.cost - b.cost));
 
     setSortedList(newList);
-  }
+  };
 
-  refSortHandler.current = ({order = false}) => {
+  refSortHandler.current = ({ order = false }) => {
     if (order !== false) {
-      setSortOrder(order)
+      setSortOrder(order);
       return;
     }
-    setSortOrder(prev => prev === 2 ? 0 : prev + 1);
-  }
+    setSortOrder(prev => (prev === 2 ? 0 : prev + 1));
+  };
 
   useEffect(() => {
-    refSetSortedList.current()
-  }, [sortOrder, list])
+    refSetSortedList.current();
+  }, [sortOrder, list]);
 
-  return { 
+  return {
     sortedList,
     sortOrder,
     handlerOrderSort: refSortHandler.current
   };
-}
+};
 
 export default useSort;
