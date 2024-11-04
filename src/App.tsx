@@ -30,7 +30,7 @@ function App() {
           <Route path='/about' element={<About />} />
         </Route>
       </Routes>
-      <ToastContainer position='top-center' icon='false' />
+      <ToastContainer position='top-center' />
     </div>
   );
 }
