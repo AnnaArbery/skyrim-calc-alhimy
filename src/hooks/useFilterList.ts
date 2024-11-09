@@ -1,5 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 
+type FilterProp<U> = {
+  [key: string]: [string, string | number | U[]];
+};
+
+type useFilterProps<T, U> = {
+  list: T[];
+  selected: U[];
+  useful?: boolean | number | string;
+  filters: FilterProp<U>;
+};
+
 const filtersList = {
   'filter.search': (item, { search: [, value] }) =>
     item.name.toLowerCase().includes(value.toLowerCase()),
@@ -22,15 +33,21 @@ const FILTER_DEFAULT = {
   search: ['filter.search', '']
 };
 
-const useFilterList = ({ list, selected = [], useful = false, filters }) => {
+const useFilterList = <T, U>({
+  list,
+  selected = [],
+  useful = false,
+  filters
+}: useFilterProps<T, U>) => {
   const [filtered, setFiltered] = useState(list || []);
   const [options, setOptions] = useState({
     ...FILTER_DEFAULT,
     ...filters
   });
-  const refChangeOption = useRef();
 
-  refChangeOption.current = option => {
+  const refChangeOption = useRef<(option: any) => void>();
+
+  refChangeOption.current = (option: any) => {
     const [name, value] = Object.entries(option).flat();
 
     setOptions(prev => {

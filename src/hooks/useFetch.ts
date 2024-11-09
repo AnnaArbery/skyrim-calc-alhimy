@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const useFetch = url => {
-  const [response, setResponse] = useState([]);
+const useFetch = <T = []>(url: string): [T, string] => {
+  const [response, setResponse] = useState<T>([]);
   const [status, setStatus] = useState('loading');
 
   useEffect(() => {

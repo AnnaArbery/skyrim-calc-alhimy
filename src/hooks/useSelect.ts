@@ -1,10 +1,18 @@
-const useSelect = ({ max, useHookStore }) => {
-  const { selected, add, remove, reset } = useHookStore();
+import { IListState } from '@/types/IListState';
 
-  const handleSelect = item => {
+const useSelect = <T extends { id: string }>({
+  max,
+  useHookStore
+}: {
+  max: number;
+  useHookStore: any;
+}) => {
+  const { selected, add, remove, reset }: IListState<T> = useHookStore();
+
+  const handleSelect = (item: T) => {
     const hasSelected = selected.some(select => select.id === item.id);
 
-    if (!item?.id) {
+    if (!item.id) {
       reset();
     } else if (!!selected.length && hasSelected) {
       remove(item);

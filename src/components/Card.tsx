@@ -1,12 +1,42 @@
-import React, { useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
+import { Item } from '@/types/Item';
 
-const Card = ({ selected, type, children }) => (
+type CardProps = {
+  selected?: boolean;
+  type?: string;
+  children?: ReactNode;
+};
+
+type ListItemProps<T extends Item> = {
+  object: T;
+  handlerClick: (object: T) => void;
+  sublist: T[];
+  sublistSelected: T[];
+  handlerClickSublist: (subitem: T) => void;
+};
+
+type TdProps = {
+  handleClick: () => void;
+  name: string;
+};
+
+type NodeItem = {
+  list: { id: string; name: string }[];
+};
+
+const Card = ({ selected, type, children }: CardProps) => (
   <div className={`card${selected ? ' card--active' : ''}${type === '0' ? ' card--envy' : ''}`}>
     {children}
   </div>
 );
 
-const ListItem = ({ object, handlerClick, sublist, sublistSelected, handlerClickSublist }) => {
+const ListItem: FC<ListItemProps<Item>> = ({
+  object,
+  sublist,
+  sublistSelected,
+  handlerClick,
+  handlerClickSublist
+}) => {
   const [isShowDropdown, setShowDropdown] = useState(false);
 
   return (
@@ -31,15 +61,20 @@ const ListItem = ({ object, handlerClick, sublist, sublistSelected, handlerClick
   );
 };
 
-const Td = ({ handleClick, name }) => (
+const Td: FC<TdProps> = ({ handleClick, name }) => (
   <button className='tableItem' onClick={handleClick}>
     {name}
   </button>
 );
 
-const NoteItem = ({ list }) => (
+const NoteItem: FC<NodeItem> = ({ list }) => (
   <div className='noteItem'>
-    {list.length && list.map(({ id, name }) => <div key={id}>{name}</div>)}
+    {list.length &&
+      list.map(({ id, name }) => (
+        <div key={id} className='noteItem__subitem'>
+          {name}
+        </div>
+      ))}
   </div>
 );
 

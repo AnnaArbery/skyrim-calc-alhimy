@@ -1,7 +1,13 @@
 import { create } from 'zustand';
 import fetchData from '../api/fetchData';
+import { Props } from '@/types/Item';
+import { IListState } from '@/types/IListState';
 
-const usePropsStore = create(set => ({
+interface IPropsState<T> extends IListState<T> {
+  properties: T[];
+}
+
+const usePropsStore = create<IPropsState<Props>>(set => ({
   properties: [],
   selected: [],
   add: item => {
@@ -11,7 +17,7 @@ const usePropsStore = create(set => ({
   },
   remove: item => {
     set(state => ({
-      selected: [...state.selected.filter(comp => comp.id !== item.id)]
+      selected: [...state.selected.filter(prop => prop.id !== item.id)]
     }));
   },
   reset: () => {

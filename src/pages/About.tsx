@@ -1,3 +1,4 @@
+import React from 'react';
 import gal1 from '../assets/img/screen1.jpg';
 import table from '../assets/img/table.jpg';
 

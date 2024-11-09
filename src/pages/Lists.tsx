@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import List from '../components/List/List';
 import Header from '../components/List/Header';
 import Selected from '../components/List/Selected';
@@ -10,6 +10,7 @@ import usePropsStore from '../store/usePropsStore';
 
 import useSelect from '../hooks/useSelect';
 import useSort from '../hooks/useSort';
+import { Comps, Props } from '@/types/Item';
 
 const FILTER_USEFUL = ['Яды', 'Эффекты', 'Все'];
 
@@ -23,7 +24,7 @@ const Lists = () => {
     selected: selectedComps,
     handleSelect: handleSelectComps,
     reset: resetComps
-  } = useSelect({
+  } = useSelect<Comps>({
     useHookStore: useComponentsStore,
     max: 3
   });
@@ -32,7 +33,7 @@ const Lists = () => {
     selected: selectedProps,
     handleSelect: handleSelectProps,
     reset: resetProps
-  } = useSelect({
+  } = useSelect<Props>({
     useHookStore: usePropsStore,
     max: 5
   });
@@ -41,7 +42,7 @@ const Lists = () => {
     filtered: filteredComponents,
     changeOption: changeFilterComps,
     options: optionsComps
-  } = useFilterList({
+  } = useFilterList<Comps, Props>({
     list: components,
     selected: selectedProps,
     filters: {
@@ -53,7 +54,7 @@ const Lists = () => {
     filtered: filteredProperties,
     changeOption: changeFilterProps,
     options: optionsProps
-  } = useFilterList({
+  } = useFilterList<Props, Comps>({
     list: properties,
     selected: selectedComps,
     useful: useful < 2 ? useful : '',
@@ -70,13 +71,13 @@ const Lists = () => {
     sortedList: sortedListComps,
     sortOrder: sortOrderComps,
     handlerOrderSort: handlerOrderSortComps
-  } = useSort({ list: filteredComponents });
+  } = useSort<Comps>({ list: filteredComponents });
 
   const {
     sortedList: sortedListProps,
     sortOrder: sortOrderProps,
     handlerOrderSort: handlerOrderSortProps
-  } = useSort({ list: filteredProperties });
+  } = useSort<Props>({ list: filteredProperties });
 
   const handlerReset = () => {
     resetComps();
@@ -94,6 +95,8 @@ const Lists = () => {
   const handlerUseful = () => {
     setUseful(prev => (prev === FILTER_USEFUL.length - 1 ? 0 : prev + 1));
   };
+
+  if (!components.length || !properties.length) return;
 
   return (
     <div className='selectors'>

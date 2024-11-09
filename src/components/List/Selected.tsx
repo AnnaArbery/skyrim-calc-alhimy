@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
+import { Item } from '@/types/Item';
 
-const Selected = ({ children }) => <div className='selected'>{children}</div>;
+type ListProps = {
+  title: string;
+  selected: Item[];
+  handleClick: (item: Item) => void;
+  sum?: number;
+};
 
-const List = ({ title, selected, handleClick, sum }) => (
+const Selected = ({ children }: { children: ReactNode }) => (
+  <div className='selected'>{children}</div>
+);
+
+const List: FC<ListProps> = ({ title, selected, handleClick, sum }) => (
   <div className='selected__list'>
     <b>{title}: </b>
     {!!selected.length &&

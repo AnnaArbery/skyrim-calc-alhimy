@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Card from '../Card';
+import { Item } from '@/types/Item';
 
-const List = ({
+type ListProps = {
+  list: Item[];
+  selected: Item[];
+  getSublist: (id: string) => Item[];
+  sublistSelected: Item[];
+  handlerClick: (item: Item) => void;
+  handlerClickSublist: (item: Item) => void;
+};
+
+const List: FC<ListProps> = ({
   list,
   selected,
   handlerClick,
@@ -15,7 +25,7 @@ const List = ({
         <Card
           key={item.id}
           selected={selected.some(select => select.id === item.id)}
-          type={item.type}>
+          type={item?.type}>
           <Card.ListItem
             object={item}
             handlerClick={handlerClick}

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Layout from './components/Layout';
 import About from './pages/About';
 import Table from './pages/Table';
 import Notes from './pages/Notes';
 import Lists from './pages/Lists';
+import Layout from './components/Layout';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/App.scss';
 

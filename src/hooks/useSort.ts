@@ -1,16 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FC } from 'react';
 
-const useSort = ({ list }) => {
+const useSort = <T extends { cost: string }>({ list }: { list: T[] }) => {
   const [sortedList, setSortedList] = useState(list);
-  const [sortOrder, setSortOrder] = useState(0);
-  const refSortHandler = useRef();
-  const refSetSortedList = useRef();
+  const [sortOrder, setSortOrder] = useState<number | boolean>(0);
+  const refSortHandler = useRef<({ order }: { order: number | boolean | undefined }) => void>();
+  const refSetSortedList = useRef<() => void>();
 
   refSetSortedList.current = () => {
     const newList =
       sortOrder === 0
         ? [...list]
-        : [...list].sort((a, b) => (sortOrder === 1 ? b.cost - a.cost : a.cost - b.cost));
+        : [...list].sort((a, b) => {
+            return sortOrder === 1
+              ? Number(b.cost) - Number(a.cost)
+              : Number(a.cost) - Number(b.cost);
+          });
 
     setSortedList(newList);
   };
@@ -20,7 +24,8 @@ const useSort = ({ list }) => {
       setSortOrder(order);
       return;
     }
-    setSortOrder(prev => (prev === 2 ? 0 : prev + 1));
+
+    setSortOrder(prev => (prev === 2 ? 0 : Number(prev) + 1));
   };
 
   useEffect(() => {

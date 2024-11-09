@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { toast } from 'react-toastify';
 
-const Cost = ({ cost: intialCost, handlerSave, showButton }) => {
+type CostProps = {
+  cost: string;
+  handlerSave: (cost: string) => void;
+  showButton: boolean;
+};
+
+const Cost: FC<CostProps> = ({ cost: intialCost, handlerSave, showButton }) => {
   const [cost, setCost] = useState(intialCost);
 
   const saveCost = () => {
@@ -21,7 +27,7 @@ const Cost = ({ cost: intialCost, handlerSave, showButton }) => {
         readOnly={!showButton}
       />
       {showButton && (
-        <button className='btn btn--edit' onClick={saveCost} label='save'>
+        <button className='btn btn--edit' onClick={saveCost} title='save'>
           &nbsp;
         </button>
       )}

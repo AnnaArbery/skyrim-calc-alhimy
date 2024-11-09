@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
+import { Item } from '@/types/Item';
 
 const useHoverDropdown = () => {
   const [dropdown, setDropdown] = useState({});
 
-  const handleHover = (e, id, subList) => {
-    const coords = e.target.getBoundingClientRect();
+  const handleHover = (e: MouseEvent, id: string, subList: Item[]) => {
+    const target = e.target as HTMLButtonElement;
+    const coords = target.getBoundingClientRect();
 
     const options = id
       ? {

@@ -1,7 +1,12 @@
 import { useMemo, useRef } from 'react';
+import { Item } from '@/types/Item';
 
-const useFilter = (list, selected, cb) => {
-  const refCb = useRef();
+const useFilter = (
+  list: Item[],
+  selected: string[],
+  cb: (list: Item[], selected: string[]) => void
+) => {
+  const refCb = useRef<(list: Item[], selected: string[]) => void>();
   refCb.current = cb;
 
   return useMemo(
