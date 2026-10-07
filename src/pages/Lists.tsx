@@ -98,6 +98,8 @@ const Lists = () => {
 
   if (!components.length || !properties.length) return;
 
+  console.log(sortedListComps)
+
   return (
     <div className='selectors'>
       <Selected>

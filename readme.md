@@ -15,7 +15,7 @@
 
 ### Переменные окружени
 
-URL_COMPONENTS="./store/props.json"  
+URL_COMPONENTS="./store/components.json"  
 URL_PROPS="./store/props.json"  
 URL_NOTES="./store/notes.json"
 

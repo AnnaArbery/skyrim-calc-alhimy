@@ -9,7 +9,7 @@ const useSort = <T extends { cost: string }>({ list }: { list: T[] }) => {
   refSetSortedList.current = () => {
     const newList =
       sortOrder === 0
-        ? [...list]
+        ? [...list].sort((a, b) => a.name.localeCompare(b.name, 'ru'))
         : [...list].sort((a, b) => {
             return sortOrder === 1
               ? Number(b.cost) - Number(a.cost)
